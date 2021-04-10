@@ -12,6 +12,8 @@
             </div>
         @endif
 
+        <h1 class="text-center">Sign In</h1>
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -32,16 +34,36 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4">
+                <x-jet-button class="mr-4">
+                    {{ __('Log in') }}
+                </x-jet-button>
+                
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
+                    </a> -->
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                        {{ __('Register') }}
                     </a>
                 @endif
 
-                <x-jet-button class="ml-4">
-                    {{ __('Log in') }}
-                </x-jet-button>
+            </div>
+
+            {{-- Login with Facebook --}}
+            <div class="flex items-center justify-end mt-4">
+                <a class="btn" href="{{ url('auth/facebook') }}"
+                style="background: #3B5499; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                Login with Facebook
+                </a>
+            </div>
+
+            {{-- Login with Google --}}
+            <div class="flex items-center justify-end mt-4">
+                <a class="btn" href="{{ url('auth/google') }}"
+                    style="background: red; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                    Login with Google
+                </a>
             </div>
         </form>
     </x-jet-authentication-card>

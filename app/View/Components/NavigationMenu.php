@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Illuminate\View\Component;
 use Cart;
 
-class AppLayout extends Component
+class NavigationMenu extends Component
 {
     public $cartTotal = 0;
 
@@ -27,7 +27,7 @@ class AppLayout extends Component
      */
     public function render()
     {
-        return view('layouts.app');
+        return view('navigation-menu');
     }
 
     public function updateCartTotal(): void
