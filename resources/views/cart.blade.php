@@ -74,7 +74,8 @@
             <span>Total cost</span>
             <span>${{ \Cart::getTotal() }}</span>
           </div>
-          <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          <!-- <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button> -->
+          <a href="{{ route('checkout.index') }}" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 px-3 text-sm text-white uppercase w-full">Proceed To Checkout</a>
         </div>
       </div>
 

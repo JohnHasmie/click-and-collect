@@ -33,5 +33,4 @@
             <p>No Products found in.</p>
         @endforelse
     </div>
-    @include('site.partials.scripts')
 </x-app-layout>

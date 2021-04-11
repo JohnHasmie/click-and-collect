@@ -15,18 +15,18 @@ use App\Http\Controllers\SocialController;
 |
 */
 
-Route::middleware(['auth:sanctum', 'guest'])->get('/', function () {
+Route::middleware(['guest'])->get('/', function () {
     // return view('welcome');
     return view('auth.login');
 });
-Route::middleware(['auth:sanctum', 'guest'])->get('/login', function () {
+Route::middleware(['guest'])->get('/login', function () {
     // return view('welcome');
     return view('auth.login');
-});
-Route::middleware(['auth:sanctum', 'guest'])->get('/register', function () {
+})->name('login');
+Route::middleware(['guest'])->get('/register', function () {
     // return view('welcome');
     return view('auth.register');
-});
+})->name('register');
 
 Route::get('auth/google', [SocialController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
@@ -34,13 +34,21 @@ Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallba
 Route::get('auth/facebook', [SocialController::class, 'facebookRedirect']);
 Route::get('auth/facebook/callback', [SocialController::class, 'loginWithFacebook']);
 
-Route::get('products', 'ProductController@getAll')->name('products');
-Route::get('product/{slug}/', 'ProductController@show')->name('product.show');
-Route::post('product/add/cart', 'ProductController@addToCart')->name('product.add.cart');
+Route::middleware(['auth:sanctum', 'verified'])->get('products', 'ProductController@getAll')->name('products');
+Route::middleware(['auth:sanctum', 'verified'])->get('product/{slug}/', 'ProductController@show')->name('product.show');
+Route::middleware(['auth:sanctum', 'verified'])->post('product/add/cart', 'ProductController@addToCart')->name('product.add.cart');
 
-Route::get('/cart', 'CartController@getCart')->name('checkout.cart');
-Route::get('/cart/item/{id}/remove', 'CartController@removeItem')->name('checkout.cart.remove');
-Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');
+Route::middleware(['auth:sanctum', 'verified'])->get('/cart', 'CartController@getCart')->name('checkout.cart');
+Route::middleware(['auth:sanctum', 'verified'])->get('/cart/item/{id}/remove', 'CartController@removeItem')->name('checkout.cart.remove');
+Route::middleware(['auth:sanctum', 'verified'])->get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('account/orders', 'AccountController@getOrders')->name('account.orders');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/checkout', 'CheckoutController@getCheckout')->name('checkout.index');
+    Route::post('/checkout/order', 'CheckoutController@placeOrder')->name('checkout.place.order');
+    Route::get('/checkout/payment/complete', 'CheckoutController@complete')->name('checkout.payment.complete');
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
