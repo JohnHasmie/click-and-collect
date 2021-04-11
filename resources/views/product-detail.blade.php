@@ -1,6 +1,11 @@
 <x-app-layout>
     <section class="text-gray-700 body-font overflow-hidden bg-white">
         <div class="container px-5 py-24 mx-auto">
+            @if (Session::has('message'))
+              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-5 rounded relative" role="alert">
+                  <span class="block sm:inline">{{ Session::get('message') }}</span>
+              </div>
+            @endif
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
             <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://via.placeholder.com/176">
             <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">

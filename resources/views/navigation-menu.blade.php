@@ -100,6 +100,10 @@
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
 
+                            <x-jet-dropdown-link href="{{ route('checkout.cart') }}">
+                                {{ __('Cart') }}
+                            </x-jet-dropdown-link>
+
                             <x-jet-dropdown-link href="{{ route('account.orders') }}">
                                 {{ __('Orders') }}
                             </x-jet-dropdown-link>

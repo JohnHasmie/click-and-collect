@@ -35,14 +35,26 @@
                 <label class="hidden text-sm block text-gray-600" for="notes">Notes</label>
                 <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="note" name="notes" type="text" required="" placeholder="Notes" aria-label="Notes">
             </div>
+            <input type="hidden" name="payment_type" value="paypal">
 
                 <!-- <p class="mt-4 text-gray-800 font-medium">Payment information</p>
                 <div class="">
                     <label class="block text-sm text-gray-600" for="cus_name">Card</label>
                     <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="cus_name" name="cus_name" type="text" required="" placeholder="Card Number MM/YY CVC" aria-label="Name">
                 </div> -->
-            <div class="mt-4">
-                <button class="px-4 py-1 text-white font-light tracking-wider bg-red-900 rounded" type="submit">${{ \Cart::getTotal() }} | Pay</button>
+            <div class="flex justify-start mt-4">
+                <div class="mr-5">
+                    <button class="px-4 py-1 text-white font-light tracking-wider bg-blue-900 rounded" type="submit">${{ \Cart::getTotal() }} | Paypal</button>
+                </div>
+                <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="{{ config('settings.stripe_key') }}"
+                    data-name="Pay with Credit Card"
+                    data-description="Click and Collect"
+                    data-amount="{{ \Cart::getTotal()*100 }}"
+                    data-currency="{{ config('settings.currency_code') }}">
+                </script>
             </div>
         </form>
     </div>

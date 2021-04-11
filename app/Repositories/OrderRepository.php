@@ -18,7 +18,7 @@ class OrderRepository extends BaseRepository implements OrderContract
 
     public function storeOrderDetails($params)
     {
-        $order = Order::create([
+        $input = [
             'order_number'      =>  'ORD-'.strtoupper(uniqid()),
             'user_id'           => auth()->user()->id,
             'status'            =>  'pending',
@@ -34,7 +34,9 @@ class OrderRepository extends BaseRepository implements OrderContract
             'post_code'         =>  $params['post_code'],
             'phone_number'      =>  $params['phone_number'],
             'notes'             =>  $params['notes']
-        ]);
+        ];
+        
+        $order = Order::create($input);
 
         if ($order) {
 

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contracts\OrderContract;
-use App\Services\PayPalService;
+use App\Services\PaypalService;
+use App\Services\StripeService;
 use Cart;
 use App\Models\Order;
 
@@ -14,9 +15,12 @@ class CheckoutController extends Controller
 
     protected $payPal;
 
-    public function __construct(OrderContract $orderRepository, PayPalService $payPal)
+    protected $stripe;
+
+    public function __construct(OrderContract $orderRepository, PaypalService $payPal, StripeService $stripe)
     {
         $this->payPal = $payPal;
+        $this->stripe = $stripe;
         $this->orderRepository = $orderRepository;
     }
 
@@ -33,8 +37,22 @@ class CheckoutController extends Controller
 
         // You can add more control here to handle if the order
         // is not stored properly
+        $stripeToken = $request->input('stripeToken');
         if ($order) {
-            $this->payPal->processPayment($order);
+            if (!$stripeToken) {
+                $this->payPal->processPayment($order);
+            } else {
+                $order->status = 'completed';
+                $order->payment_status = 1;
+                $order->payment_method = 'Stripe -'.$request->input('stripeEmail');
+                $order->save();
+
+                $order->stripeToken = $stripeToken;
+                $this->stripe->processPayment($order);
+
+                Cart::clear();
+                return view('success', compact('order'));
+            }
         }
 
         return redirect()->back()->with('message','Order not placed');

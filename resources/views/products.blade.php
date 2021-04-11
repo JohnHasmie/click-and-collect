@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="flex justify-center mt-8 grid grid-flow-col auto-cols-max gap-4">
+    <div class="flex justify-center mt-8 grid grid-flow-col auto-cols-max gap-10">
         @forelse($products as $product)
             <div>
                 <figure class="card card-product">
@@ -9,17 +9,17 @@
                         <div class="img-wrap padding-y"><img src="https://via.placeholder.com/176" alt=""></div>
                     @endif
                     <figcaption class="info-wrap">
-                        <h4 class="title"><a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h4>
+                        <h4 class="title text-center"><a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h4>
                     </figcaption>
                     <div class="">
                         @if ($product->sale_price != 0)
-                        <div class="flex justify-start">
+                        <div class="flex justify-center font-bold text-green-500">
                             <!-- <del class="price-old"> {{ config('settings.currency_symbol').$product->price }}</del> -->
-                            <span class="price"> ${{ config('settings.currency_symbol').$product->sale_price }} </span>
+                            $<span class="text-xl">{{ config('settings.currency_symbol').$product->sale_price }} </span>
                         </div>
                         @else
-                        <div class="price-wrap h5">
-                            <span class="price"> ${{ config('settings.currency_symbol').$product->price }} </span>
+                        <div class="price-wrap text-center text-green-500">
+                            <span class=""> ${{ config('settings.currency_symbol').$product->price }} </span>
                         </div>
                         @endif
                         <div class="flex justify-center">

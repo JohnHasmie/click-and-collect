@@ -3,7 +3,7 @@
     <div class="flex shadow-md my-10">
       <div class="w-3/4 bg-white px-10 py-10">
         @if (Session::has('message'))
-          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-5 rounded relative" role="alert">
               <span class="block sm:inline">{{ Session::get('message') }}</span>
           </div>
         @endif
